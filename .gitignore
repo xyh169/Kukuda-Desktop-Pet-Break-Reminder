@@ -1,0 +1,8 @@
+.DS_Store
+.build/
+.tools/
+build/
+dist/
+Assets/Kukuda.iconset/
+*.zip
+
