@@ -16,6 +16,23 @@
   <a href="#中文">中文</a>
 </p>
 
+## Kukuda on your desktop · Kukuda i runga i tō papamahi · 桌面实景
+
+<table>
+  <tr>
+    <td width="50%">
+      <img src="Assets/screenshots/kukuda-victory-dance.png" alt="Kukuda celebrates finding a worm with a victory dance on the desktop">
+    </td>
+    <td width="50%">
+      <img src="Assets/screenshots/kukuda-foraging.png" alt="Kukuda forages for a worm on the desktop">
+    </td>
+  </tr>
+  <tr>
+    <td align="center">Victory dance · Kanikani toa · 发现虫虫后的胜利舞</td>
+    <td align="center">Foraging time · He wā kimi kai · 认真刨地觅食</td>
+  </tr>
+</table>
+
 ---
 
 ## English
