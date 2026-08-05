@@ -28,16 +28,20 @@
     </td>
   </tr>
   <tr>
-    <td align="center">A little smile · He menemene iti · 笑一个</td>
+    <td align="center">Keep smiling · Kia menemene tonu · 多笑笑</td>
     <td align="center">Snack first · Kai tuatahi · 吃饭第一</td>
   </tr>
   <tr>
-    <td colspan="2" align="center">
-      <img src="Assets/screenshots/kukuda-foraging.png" width="70%" alt="Kukuda forages for a worm on the desktop">
+    <td width="50%">
+      <img src="Assets/screenshots/kukuda-foraging.png" alt="Kukuda forages for a worm on the desktop">
+    </td>
+    <td width="50%">
+      <img src="Assets/screenshots/kukuda-work-cant-catch.png" alt="Kukuda says that work cannot catch this kiwi">
     </td>
   </tr>
   <tr>
-    <td colspan="2" align="center">Foraging time · He wā kimi kai · 认真刨地觅食</td>
+    <td align="center">Foraging time · He wā kimi kai · 认真刨地觅食</td>
+    <td align="center">Work can’t catch this kiwi · Kāore e mau i te mahi tēnei kiwi · 工作抓不到这只 Kiwi</td>
   </tr>
 </table>
 
