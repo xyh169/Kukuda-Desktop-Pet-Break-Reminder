@@ -29,10 +29,10 @@ Kukuda 是一款原生 macOS 休息提醒应用。累计使用电脑一段时间
 ## Download / 下载
 
 Download the newest `Kukuda-…-macOS-universal.zip` from
-[GitHub Releases](https://github.com/xyh169/Kukuda/releases), unzip it, and move
+[GitHub Releases](https://github.com/xyh169/Kukuda-Desktop-Pet-Break-Reminder/releases), unzip it, and move
 `Kukuda.app` to your Applications folder.
 
-从 [Releases](https://github.com/xyh169/Kukuda/releases) 下载最新的
+从 [Releases](https://github.com/xyh169/Kukuda-Desktop-Pet-Break-Reminder/releases) 下载最新的
 `Kukuda-…-macOS-universal.zip`，解压后将 `Kukuda.app` 拖进“应用程序”文件夹。
 
 Kukuda is currently ad-hoc signed rather than Apple-notarized. On first launch,
