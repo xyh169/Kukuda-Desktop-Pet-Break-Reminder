@@ -60,6 +60,20 @@ enum ReminderMessages {
         .init(maori: "Kua piki ake te wairua!", english: "Morale successfully upgraded!")
     ]
 
+    static let sprint: [ReminderMessage] = [
+        .init(maori: "Hopu mai mēnā ka taea!", english: "Catch me if you can!"),
+        .init(maori: "Kua whakakāngia te tere kiwi!", english: "Kiwi turbo activated!"),
+        .init(maori: "He waewae kaha, he kiwi tere!", english: "Powerful legs, speedy kiwi!"),
+        .init(maori: "Ka oma tika au ki te wā whakatā!", english: "Sprinting straight into break time!")
+    ]
+
+    static let spin: [ReminderMessage] = [
+        .init(maori: "Hurihuri! Kei hea a runga?", english: "Spin, spin — which way is up?"),
+        .init(maori: "He āwhiowhio kiwi ahau!", english: "I’m a kiwi whirlwind!"),
+        .init(maori: "Kotahi anō te huri!", english: "One more twirl!"),
+        .init(maori: "Kua pōturi te mahi, kua tere te kiwi!", english: "Work slowed down. Kiwi sped up!")
+    ]
+
     static let jump: [ReminderMessage] = [
         .init(maori: "He parirau iti, he wawata nui!", english: "Tiny wings, big ambitions!"),
         .init(maori: "Titiro! Kua tata au ki te rere!", english: "Look! I’m almost flying!"),
@@ -122,6 +136,14 @@ enum ReminderMessages {
 
     static func randomPlay() -> ReminderMessage {
         play.randomElement() ?? play[0]
+    }
+
+    static func randomSprint() -> ReminderMessage {
+        sprint.randomElement() ?? sprint[0]
+    }
+
+    static func randomSpin() -> ReminderMessage {
+        spin.randomElement() ?? spin[0]
     }
 
     static func randomJump() -> ReminderMessage {

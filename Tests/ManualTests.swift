@@ -42,6 +42,8 @@ enum ManualTests {
     private static func actionMessagesAreBilingual() {
         let messages = ReminderMessages.rest
             + ReminderMessages.play
+            + ReminderMessages.sprint
+            + ReminderMessages.spin
             + ReminderMessages.jump
             + ReminderMessages.forage
             + ReminderMessages.sniff
@@ -49,7 +51,7 @@ enum ManualTests {
             + ReminderMessages.sleep
             + ReminderMessages.call
             + ReminderMessages.combo
-        precondition(messages.count >= 50)
+        precondition(messages.count >= 60)
         precondition(messages.allSatisfy { !$0.english.isEmpty && !$0.maori.isEmpty })
     }
 }

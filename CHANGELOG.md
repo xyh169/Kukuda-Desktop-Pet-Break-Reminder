@@ -2,6 +2,14 @@
 
 All notable changes to Kukuda are documented here.
 
+## 0.3.0 — 2026-08-05
+
+- The **Tākaro · Play** button now randomly triggers a dance, jump, sprint,
+  spin, or call instead of repeating the same dance.
+- Added per-action movement speeds, including fast full-screen kiwi zoomies.
+- Added sprint speed lines, spinning sparkles, and 8 matching English and te
+  reo Māori lines, bringing the total to 60.
+
 ## 0.2.0 — 2026-08-05
 
 - Added four real-kiwi-inspired animations: scent probing, feather preening,

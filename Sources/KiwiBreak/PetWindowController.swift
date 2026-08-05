@@ -76,7 +76,18 @@ final class PetWindowController: NSWindowController {
     }
 
     private func play() {
-        beginAction(.dancing, duration: 4.5, message: ReminderMessages.randomPlay())
+        switch Int.random(in: 0..<5) {
+        case 0:
+            beginAction(.dancing, duration: 3.6, message: ReminderMessages.randomPlay())
+        case 1:
+            beginAction(.jumping, duration: 2.8, message: ReminderMessages.randomJump())
+        case 2:
+            beginAction(.sprinting, duration: 3.8, message: ReminderMessages.randomSprint())
+        case 3:
+            beginAction(.spinning, duration: 3.2, message: ReminderMessages.randomSpin())
+        default:
+            beginAction(.calling, duration: 3.4, message: ReminderMessages.randomCall())
+        }
         targetPoint = nil
         scheduleNextMessage()
     }
@@ -110,9 +121,10 @@ final class PetWindowController: NSWindowController {
             } else {
                 let speed: CGFloat
                 switch petView.motion {
-                case .foraging, .sniffing, .preening, .sleeping, .calling: speed = 0
+                case .foraging, .sniffing, .preening, .sleeping, .calling, .spinning: speed = 0
                 case .jumping: speed = normalSpeed * 0.72
-                case .dancing: speed = normalSpeed * 1.75
+                case .dancing: speed = normalSpeed * 2.05
+                case .sprinting: speed = normalSpeed * 3.8
                 case .walking: speed = normalSpeed
                 }
                 let next = NSPoint(
@@ -136,6 +148,8 @@ final class PetWindowController: NSWindowController {
         case .preening: petView.animationPhase += 0.06
         case .sleeping: petView.animationPhase += 0.035
         case .calling: petView.animationPhase += 0.13
+        case .sprinting: petView.animationPhase += 0.26
+        case .spinning: petView.animationPhase += 0.22
         }
     }
 

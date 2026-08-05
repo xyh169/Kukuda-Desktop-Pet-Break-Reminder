@@ -11,6 +11,8 @@ final class KiwiPetView: NSView {
         case preening
         case sleeping
         case calling
+        case sprinting
+        case spinning
     }
 
     enum Action {
@@ -135,6 +137,10 @@ final class KiwiPetView: NSView {
             drawSleepingScene()
         } else if motion == .calling {
             drawCallingScene()
+        } else if motion == .sprinting {
+            drawSprintingScene()
+        } else if motion == .spinning {
+            drawSpinningScene()
         }
 
         NSGraphicsContext.saveGraphicsState()
@@ -165,12 +171,28 @@ final class KiwiPetView: NSView {
         case .calling:
             bob = abs(sin(animationPhase * 1.4)) * 4
             rotation = 0.08 + abs(sin(animationPhase * 1.4)) * 0.10
+        case .sprinting:
+            bob = abs(sin(animationPhase * 2.4)) * 5
+            rotation = sin(animationPhase * 2.4) * 0.035
+        case .spinning:
+            bob = abs(sin(actionProgress * .pi * 6)) * 7
+            rotation = sin(actionProgress * .pi * 6) * 0.10
         }
         let transform = NSAffineTransform()
         transform.translateX(by: 174, yBy: 57 + bob)
         transform.rotate(byRadians: rotation)
         let verticalScale = motion == .sleeping ? 0.92 + sin(animationPhase) * 0.012 : 1
-        transform.scaleX(by: facingRight ? 1 : -1, yBy: verticalScale)
+        let directionScale: CGFloat = facingRight ? 1 : -1
+        let horizontalScale: CGFloat
+        if motion == .spinning {
+            let spin = cos(actionProgress * .pi * 6)
+            horizontalScale = directionScale * (abs(spin) < 0.08 ? (spin < 0 ? -0.08 : 0.08) : spin)
+        } else if motion == .sprinting {
+            horizontalScale = directionScale * 1.06
+        } else {
+            horizontalScale = directionScale
+        }
+        transform.scaleX(by: horizontalScale, yBy: verticalScale)
         transform.translateX(by: -174, yBy: -57)
         transform.concat()
 
@@ -187,6 +209,8 @@ final class KiwiPetView: NSView {
         case .foraging: step = 0
         case .dancing: step = sin(animationPhase * 2) * 8
         case .sniffing, .preening, .sleeping, .calling: step = 0
+        case .sprinting: step = sin(animationPhase * 2.4) * 11
+        case .spinning: step = sin(actionProgress * .pi * 8) * 6
         }
         drawLeg(from: NSPoint(x: 152, y: 37), offset: step)
         drawLeg(from: NSPoint(x: 192, y: 37), offset: -step)
@@ -217,7 +241,8 @@ final class KiwiPetView: NSView {
         drawFace()
 
         // Rosy cheek during energetic actions.
-        if motion == .dancing || motion == .jumping || motion == .sleeping {
+        if motion == .dancing || motion == .jumping || motion == .sleeping
+            || motion == .sprinting || motion == .spinning {
             NSColor(calibratedRed: 0.94, green: 0.48, blue: 0.45, alpha: 0.55).setFill()
             NSBezierPath(ovalIn: NSRect(x: 207, y: 75, width: 18, height: 9)).fill()
         }
@@ -424,6 +449,42 @@ final class KiwiPetView: NSView {
                 endAngle: endAngle
             )
             arc.stroke()
+        }
+    }
+
+    private func drawSprintingScene() {
+        let direction: CGFloat = facingRight ? 1 : -1
+        let startX: CGFloat = facingRight ? 92 : 268
+        let speedColor = NSColor(calibratedRed: 0.22, green: 0.49, blue: 0.38, alpha: 0.55)
+        speedColor.setStroke()
+        for index in 0..<3 {
+            let line = NSBezierPath()
+            line.lineWidth = CGFloat(2 + index) * 0.7
+            line.lineCapStyle = .round
+            let y = CGFloat(49 + index * 17)
+            let shimmer = sin(animationPhase * 2 + CGFloat(index)) * 6
+            line.move(to: NSPoint(x: startX - direction * (38 + shimmer), y: y))
+            line.line(to: NSPoint(x: startX - direction * CGFloat(8 + index * 4), y: y))
+            line.stroke()
+        }
+    }
+
+    private func drawSpinningScene() {
+        let sparkleColor = NSColor(calibratedRed: 0.94, green: 0.67, blue: 0.18, alpha: 0.78)
+        sparkleColor.setStroke()
+        for index in 0..<3 {
+            let angle = actionProgress * .pi * 6 + CGFloat(index) * (.pi * 2 / 3)
+            let center = NSPoint(
+                x: 174 + cos(angle) * 91,
+                y: 73 + sin(angle) * 42
+            )
+            let sparkle = NSBezierPath()
+            sparkle.lineWidth = 1.8
+            sparkle.move(to: NSPoint(x: center.x, y: center.y - 5))
+            sparkle.line(to: NSPoint(x: center.x, y: center.y + 5))
+            sparkle.move(to: NSPoint(x: center.x - 5, y: center.y))
+            sparkle.line(to: NSPoint(x: center.x + 5, y: center.y))
+            sparkle.stroke()
         }
     }
 
