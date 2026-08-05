@@ -21,15 +21,23 @@
 <table>
   <tr>
     <td width="50%">
-      <img src="Assets/screenshots/kukuda-victory-dance.png" alt="Kukuda celebrates finding a worm with a victory dance on the desktop">
+      <img src="Assets/screenshots/kukuda-smiling.png" alt="Kukuda shares a cheerful break reminder on the desktop">
     </td>
     <td width="50%">
-      <img src="Assets/screenshots/kukuda-foraging.png" alt="Kukuda forages for a worm on the desktop">
+      <img src="Assets/screenshots/kukuda-snack-first.png" alt="Kukuda catches a worm on the desktop">
     </td>
   </tr>
   <tr>
-    <td align="center">Victory dance · Kanikani toa · 发现虫虫后的胜利舞</td>
-    <td align="center">Foraging time · He wā kimi kai · 认真刨地觅食</td>
+    <td align="center">A little smile · He menemene iti · 笑一个</td>
+    <td align="center">Snack first · Kai tuatahi · 吃饭第一</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">
+      <img src="Assets/screenshots/kukuda-foraging.png" width="70%" alt="Kukuda forages for a worm on the desktop">
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">Foraging time · He wā kimi kai · 认真刨地觅食</td>
   </tr>
 </table>
 
