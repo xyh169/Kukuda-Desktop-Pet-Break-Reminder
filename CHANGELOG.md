@@ -2,6 +2,13 @@
 
 All notable changes to Kukuda are documented here.
 
+## 0.3.1 — 2026-08-05
+
+- Made the menu-bar timer compact with the Kukuda icon and countdown, so it is
+  less likely to be hidden on notched or crowded menu bars.
+- Double-clicking the desktop shortcut now explicitly restores the menu-bar
+  item if macOS has hidden it.
+
 ## 0.3.0 — 2026-08-05
 
 - The **Tākaro · Play** button now randomly triggers a dance, jump, sprint,

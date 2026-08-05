@@ -55,7 +55,7 @@ Māori and English, and invites you to take a real break.
 
 ### Features
 
-- Menu-bar countdown with 1, 15, 30, 45, and 60 minute intervals.
+- Compact Kukuda icon and countdown in the menu bar, with 1, 15, 30, 45, and 60 minute intervals.
 - Pause, reset, summon Kukuda immediately, or launch automatically at login.
 - Random wandering across the whole screen while staying inside the visible display area.
 - Jumping, dancing, sprinting, spinning, ground-probing, foraging, preening, napping, calling, and worm-eating animations.
@@ -119,7 +119,7 @@ Pākehā, ā, ka tono kia whakatā tūturu koe.
 
 ### Ngā āhuatanga
 
-- He tatau whakamuri kei te pae tahua, me ngā wā 1, 15, 30, 45, 60 meneti.
+- He ata Kukuda iti me te tatau whakamuri kei te pae tahua, me ngā wā 1, 15, 30, 45, 60 meneti.
 - Ka taea te whakatārewa, te tīmata anō, te karanga wawe i a Kukuda, te tīmata aunoa rānei ina takiuru koe.
 - Ka hīkoi matapōkere a Kukuda puta noa i te mata, engari ka noho tonu ki te wāhi e kitea ana.
 - He mahi peke, kanikani, oma tere, hurihuri, pao whenua, kimi kai, whakapaipai huruhuru, moe, karanga, me te kai noke.
@@ -183,7 +183,7 @@ Kukuda 会在屏幕上随机巡游，用毛利语和英语说些俏皮话，提�
 
 ### 功能
 
-- 菜单栏显示剩余时间，可选择 1、15、30、45 或 60 分钟的提醒间隔。
+- 菜单栏以紧凑的 Kukuda 图标和倒计时显示剩余时间，可选择 1、15、30、45 或 60 分钟。
 - 可以暂停、重新计时、立即召唤 Kukuda，或设置为登录时自动启动。
 - Kukuda 会在整个屏幕范围内随机走动，同时保持在可见区域内。
 - 包含跳跃、跳舞、快速冲刺、原地旋转、嗅闻探地、觅食、梳理羽毛、打盹、鸣叫和吃虫子等动作。

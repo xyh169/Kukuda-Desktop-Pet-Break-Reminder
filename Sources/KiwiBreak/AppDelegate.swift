@@ -5,7 +5,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let settings = Settings.shared
     private let pet = PetWindowController()
     private lazy var monitor = ActivityMonitor(reminderMinutes: settings.reminderMinutes)
-    private var statusItem: NSStatusItem!
+    private var statusItem: NSStatusItem?
     private var statusMenuItem: NSMenuItem!
     private var toggleTimerItem: NSMenuItem!
     private var loginItem: NSMenuItem!
@@ -37,16 +37,33 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         _ sender: NSApplication,
         hasVisibleWindows flag: Bool
     ) -> Bool {
+        ensureStatusItemVisible()
         pet.show()
         return true
     }
 
     private func configureStatusItem() {
-        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        if let button = statusItem.button {
-            button.title = "Kukuda"
+        if let statusItem {
+            NSStatusBar.system.removeStatusItem(statusItem)
+        }
+
+        let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        statusItem = item
+        item.isVisible = true
+
+        if let button = item.button {
+            button.title = "--:--"
             button.toolTip = "Kukuda · Kia whakatā"
             button.font = .systemFont(ofSize: 13, weight: .semibold)
+            button.imagePosition = .imageLeading
+            button.imageScaling = .scaleProportionallyDown
+            button.setAccessibilityLabel("Kukuda break timer")
+
+            if let iconURL = Bundle.main.url(forResource: "Kukuda", withExtension: "icns"),
+               let icon = NSImage(contentsOf: iconURL) {
+                icon.size = NSSize(width: 18, height: 18)
+                button.image = icon
+            }
         }
 
         let menu = NSMenu()
@@ -90,8 +107,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         quitItem.target = self
         menu.addItem(quitItem)
 
-        statusItem.menu = menu
+        item.menu = menu
+        ensureStatusItemVisible()
         refreshMenuChecks()
+    }
+
+    private func ensureStatusItemVisible() {
+        guard let statusItem else {
+            configureStatusItem()
+            return
+        }
+        statusItem.length = NSStatusItem.variableLength
+        statusItem.isVisible = true
+        statusItem.button?.isHidden = false
     }
 
     private func updateStatus(remaining: TimeInterval) {
@@ -101,15 +129,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let countdown = String(format: "%02d:%02d", minutes, seconds)
         if settings.timerEnabled {
             if pet.isVisible {
-                statusItem.button?.title = "Kukuda · 休息中"
+                statusItem?.button?.title = "休息"
                 statusMenuItem.title = "Break time · He wā whakatā"
             } else {
-                statusItem.button?.title = "Kukuda · \(countdown)"
+                statusItem?.button?.title = countdown
                 statusMenuItem.title = "Remaining \(countdown) · E \(countdown) e toe ana"
             }
             toggleTimerItem.title = "Pause Timer · Whakatārewatia"
         } else {
-            statusItem.button?.title = "Kukuda · 已暂停"
+            statusItem?.button?.title = "暂停"
             statusMenuItem.title = "Timer paused · Kua whakatārewatia"
             toggleTimerItem.title = "Start Timer · Tīmata te wā"
         }
