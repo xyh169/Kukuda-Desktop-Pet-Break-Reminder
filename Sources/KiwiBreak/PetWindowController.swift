@@ -110,7 +110,7 @@ final class PetWindowController: NSWindowController {
             } else {
                 let speed: CGFloat
                 switch petView.motion {
-                case .foraging: speed = 0
+                case .foraging, .sniffing, .preening, .sleeping, .calling: speed = 0
                 case .jumping: speed = normalSpeed * 0.72
                 case .dancing: speed = normalSpeed * 1.75
                 case .walking: speed = normalSpeed
@@ -132,6 +132,10 @@ final class PetWindowController: NSWindowController {
         case .jumping: petView.animationPhase += 0.14
         case .foraging: petView.animationPhase += 0.11
         case .dancing: petView.animationPhase += 0.16
+        case .sniffing: petView.animationPhase += 0.10
+        case .preening: petView.animationPhase += 0.06
+        case .sleeping: petView.animationPhase += 0.035
+        case .calling: petView.animationPhase += 0.13
         }
     }
 
@@ -157,10 +161,19 @@ final class PetWindowController: NSWindowController {
         }
 
         if now >= nextRandomAction {
-            if Bool.random() {
+            switch Int.random(in: 0..<6) {
+            case 0:
                 beginAction(.jumping, duration: 3.4, message: ReminderMessages.randomJump())
-            } else {
+            case 1:
                 beginAction(.foraging, duration: 5.8, message: ReminderMessages.randomForage())
+            case 2:
+                beginAction(.sniffing, duration: 4.4, message: ReminderMessages.randomSniff())
+            case 3:
+                beginAction(.preening, duration: 4.8, message: ReminderMessages.randomPreen())
+            case 4:
+                beginAction(.sleeping, duration: 5.6, message: ReminderMessages.randomSleep())
+            default:
+                beginAction(.calling, duration: 4.2, message: ReminderMessages.randomCall())
             }
         }
     }

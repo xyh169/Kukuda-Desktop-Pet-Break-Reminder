@@ -80,6 +80,34 @@ enum ReminderMessages {
         .init(maori: "Mā te puku ora ka koa te kiwi.", english: "A happy tummy makes a happy kiwi.")
     ]
 
+    static let sniff: [ReminderMessage] = [
+        .init(maori: "Ka hongi au i te kai i raro i te whenua!", english: "I can smell snacks underground!"),
+        .init(maori: "Kei te pito o taku ngutu ngā pongaponga ihu!", english: "My nostrils are at the tip of my beak!"),
+        .init(maori: "Hongi, pao, ka kitea te kai!", english: "Sniff, probe, snack located!"),
+        .init(maori: "Kāore he noke e huna i taku ihu.", english: "No worm can hide from this nose.")
+    ]
+
+    static let preen: [ReminderMessage] = [
+        .init(maori: "He wā whakapaipai huruhuru.", english: "Feather maintenance time."),
+        .init(maori: "He rā pōraruraru mō ngā huruhuru? Māku e whakatika.", english: "Bad feather day? I can fix that."),
+        .init(maori: "He wā tiaki i a au anō.", english: "A tiny self-care break."),
+        .init(maori: "He iti ngā parirau, he nui te whakapaipai.", english: "Tiny wings, serious grooming.")
+    ]
+
+    static let sleep: [ReminderMessage] = [
+        .init(maori: "Ka moe tū te kiwi!", english: "A kiwi can sleep standing up!"),
+        .init(maori: "Kaua e whakararuraru — kei te whakahiko anō ahau.", english: "Do not disturb — recharging."),
+        .init(maori: "Ka hoki au ki taku rua moemoeā.", english: "Back to my dream burrow."),
+        .init(maori: "Kua kati ngā karu, kua whakatā te mahi.", english: "Eyes closed. Work paused.")
+    ]
+
+    static let call: [ReminderMessage] = [
+        .init(maori: "Kia rongo te ngahere: kei konei a Kukuda!", english: "Let the forest know: Kukuda is here!"),
+        .init(maori: "Kei hea koe, e hoa?", english: "Where are you, friend?"),
+        .init(maori: "He karanga nui nō tētahi kiwi iti!", english: "Big call, tiny kiwi!"),
+        .init(maori: "Ko taku tēnei rohe — me taku wā whakatā hoki!", english: "My territory — and my break time too!")
+    ]
+
     static let combo: [ReminderMessage] = [
         .init(maori: "Kua mau te kai — he peke toa ināianei!", english: "Snack secured — victory hop!"),
         .init(maori: "Kua kitea he noke — me kanikani!", english: "Found a worm — time for a victory dance!"),
@@ -102,6 +130,22 @@ enum ReminderMessages {
 
     static func randomForage() -> ReminderMessage {
         forage.randomElement() ?? forage[0]
+    }
+
+    static func randomSniff() -> ReminderMessage {
+        sniff.randomElement() ?? sniff[0]
+    }
+
+    static func randomPreen() -> ReminderMessage {
+        preen.randomElement() ?? preen[0]
+    }
+
+    static func randomSleep() -> ReminderMessage {
+        sleep.randomElement() ?? sleep[0]
+    }
+
+    static func randomCall() -> ReminderMessage {
+        call.randomElement() ?? call[0]
     }
 
     static func randomCombo() -> ReminderMessage {

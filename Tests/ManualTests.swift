@@ -44,8 +44,12 @@ enum ManualTests {
             + ReminderMessages.play
             + ReminderMessages.jump
             + ReminderMessages.forage
+            + ReminderMessages.sniff
+            + ReminderMessages.preen
+            + ReminderMessages.sleep
+            + ReminderMessages.call
             + ReminderMessages.combo
-        precondition(messages.count >= 30)
+        precondition(messages.count >= 50)
         precondition(messages.allSatisfy { !$0.english.isEmpty && !$0.maori.isEmpty })
     }
 }

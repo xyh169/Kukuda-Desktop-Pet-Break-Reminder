@@ -2,6 +2,16 @@
 
 All notable changes to Kukuda are documented here.
 
+## 0.2.0 — 2026-08-05
+
+- Added four real-kiwi-inspired animations: scent probing, feather preening,
+  standing naps, and territorial calling.
+- Added animated scent trails, tucked-beak sleeping, closed eyes, floating
+  sleep marks, an open calling beak, and sound waves.
+- Added 16 matching English and te reo Māori lines, bringing the total to 52.
+- Expanded the README to English, te reo Māori, and Chinese with a real desktop
+  screenshot gallery.
+
 ## 0.1.0 — 2026-08-05
 
 - First public release.
@@ -10,4 +20,3 @@ All notable changes to Kukuda are documented here.
 - Full-screen random wandering with jumping, dancing, foraging, and worm-eating animations.
 - 36 playful English and te reo Māori messages.
 - Native AppKit implementation with no third-party runtime dependencies.
-

@@ -7,6 +7,10 @@ final class KiwiPetView: NSView {
         case jumping
         case foraging
         case dancing
+        case sniffing
+        case preening
+        case sleeping
+        case calling
     }
 
     enum Action {
@@ -123,6 +127,14 @@ final class KiwiPetView: NSView {
     private func drawKiwi() {
         if motion == .foraging {
             drawForagingScene()
+        } else if motion == .sniffing {
+            drawSniffingScene()
+        } else if motion == .preening {
+            drawPreeningScene()
+        } else if motion == .sleeping {
+            drawSleepingScene()
+        } else if motion == .calling {
+            drawCallingScene()
         }
 
         NSGraphicsContext.saveGraphicsState()
@@ -141,11 +153,24 @@ final class KiwiPetView: NSView {
         case .dancing:
             bob = abs(sin(animationPhase * 2)) * 13
             rotation = sin(animationPhase * 1.5) * 0.18
+        case .sniffing:
+            bob = abs(sin(animationPhase * 1.4)) * 2
+            rotation = -0.04 - abs(sin(animationPhase * 1.9)) * 0.08
+        case .preening:
+            bob = abs(sin(animationPhase * 0.8)) * 1.5
+            rotation = sin(animationPhase * 1.2) * 0.035
+        case .sleeping:
+            bob = sin(animationPhase) * 1.2
+            rotation = -0.035
+        case .calling:
+            bob = abs(sin(animationPhase * 1.4)) * 4
+            rotation = 0.08 + abs(sin(animationPhase * 1.4)) * 0.10
         }
         let transform = NSAffineTransform()
         transform.translateX(by: 174, yBy: 57 + bob)
         transform.rotate(byRadians: rotation)
-        transform.scaleX(by: facingRight ? 1 : -1, yBy: 1)
+        let verticalScale = motion == .sleeping ? 0.92 + sin(animationPhase) * 0.012 : 1
+        transform.scaleX(by: facingRight ? 1 : -1, yBy: verticalScale)
         transform.translateX(by: -174, yBy: -57)
         transform.concat()
 
@@ -161,6 +186,7 @@ final class KiwiPetView: NSView {
         case .jumping: step = sin(animationPhase * 1.15) * 4
         case .foraging: step = 0
         case .dancing: step = sin(animationPhase * 2) * 8
+        case .sniffing, .preening, .sleeping, .calling: step = 0
         }
         drawLeg(from: NSPoint(x: 152, y: 37), offset: step)
         drawLeg(from: NSPoint(x: 192, y: 37), offset: -step)
@@ -188,31 +214,10 @@ final class KiwiPetView: NSView {
             feather.stroke()
         }
 
-        // Beak
-        let beak = NSBezierPath()
-        beak.move(to: NSPoint(x: 222, y: 91))
-        beak.curve(
-            to: NSPoint(x: 314, y: 70),
-            controlPoint1: NSPoint(x: 253, y: 93),
-            controlPoint2: NSPoint(x: 284, y: 81)
-        )
-        beak.curve(
-            to: NSPoint(x: 222, y: 82),
-            controlPoint1: NSPoint(x: 278, y: 71),
-            controlPoint2: NSPoint(x: 249, y: 78)
-        )
-        beak.close()
-        NSColor(calibratedRed: 0.82, green: 0.65, blue: 0.32, alpha: 1).setFill()
-        beak.fill()
-
-        // Eye and catchlight
-        NSColor(calibratedWhite: 0.04, alpha: 1).setFill()
-        NSBezierPath(ovalIn: NSRect(x: 211, y: 92, width: 13, height: 13)).fill()
-        NSColor.white.setFill()
-        NSBezierPath(ovalIn: NSRect(x: 215, y: 98, width: 4, height: 4)).fill()
+        drawFace()
 
         // Rosy cheek during energetic actions.
-        if motion == .dancing || motion == .jumping {
+        if motion == .dancing || motion == .jumping || motion == .sleeping {
             NSColor(calibratedRed: 0.94, green: 0.48, blue: 0.45, alpha: 0.55).setFill()
             NSBezierPath(ovalIn: NSRect(x: 207, y: 75, width: 18, height: 9)).fill()
         }
@@ -274,6 +279,152 @@ final class KiwiPetView: NSView {
         }
         NSColor(calibratedRed: 0.42, green: 0.31, blue: 0.19, alpha: 0.48).setStroke()
         scratch.stroke()
+    }
+
+    private func drawFace() {
+        let beakColor = NSColor(calibratedRed: 0.82, green: 0.65, blue: 0.32, alpha: 1)
+        beakColor.setFill()
+
+        switch motion {
+        case .preening, .sleeping:
+            // Kiwi really do try to tuck their long beak back into their feathers.
+            let tuckedBeak = NSBezierPath()
+            tuckedBeak.move(to: NSPoint(x: 220, y: 91))
+            tuckedBeak.curve(
+                to: NSPoint(x: 168, y: 57),
+                controlPoint1: NSPoint(x: 205, y: 87),
+                controlPoint2: NSPoint(x: 181, y: 66)
+            )
+            tuckedBeak.curve(
+                to: NSPoint(x: 216, y: 82),
+                controlPoint1: NSPoint(x: 181, y: 61),
+                controlPoint2: NSPoint(x: 202, y: 76)
+            )
+            tuckedBeak.close()
+            tuckedBeak.fill()
+        case .calling:
+            let upperBeak = NSBezierPath()
+            upperBeak.move(to: NSPoint(x: 222, y: 92))
+            upperBeak.curve(
+                to: NSPoint(x: 314, y: 82),
+                controlPoint1: NSPoint(x: 254, y: 96),
+                controlPoint2: NSPoint(x: 286, y: 89)
+            )
+            upperBeak.line(to: NSPoint(x: 222, y: 86))
+            upperBeak.close()
+            upperBeak.fill()
+
+            let lowerBeak = NSBezierPath()
+            lowerBeak.move(to: NSPoint(x: 222, y: 82))
+            lowerBeak.line(to: NSPoint(x: 306, y: 69))
+            lowerBeak.line(to: NSPoint(x: 222, y: 76))
+            lowerBeak.close()
+            lowerBeak.fill()
+        default:
+            let beak = NSBezierPath()
+            beak.move(to: NSPoint(x: 222, y: 91))
+            beak.curve(
+                to: NSPoint(x: 314, y: 70),
+                controlPoint1: NSPoint(x: 253, y: 93),
+                controlPoint2: NSPoint(x: 284, y: 81)
+            )
+            beak.curve(
+                to: NSPoint(x: 222, y: 82),
+                controlPoint1: NSPoint(x: 278, y: 71),
+                controlPoint2: NSPoint(x: 249, y: 78)
+            )
+            beak.close()
+            beak.fill()
+        }
+
+        if motion == .sleeping {
+            let closedEye = NSBezierPath()
+            closedEye.lineWidth = 2.6
+            closedEye.lineCapStyle = .round
+            closedEye.move(to: NSPoint(x: 210, y: 97))
+            closedEye.curve(
+                to: NSPoint(x: 223, y: 96),
+                controlPoint1: NSPoint(x: 214, y: 92),
+                controlPoint2: NSPoint(x: 219, y: 92)
+            )
+            NSColor(calibratedWhite: 0.04, alpha: 1).setStroke()
+            closedEye.stroke()
+        } else {
+            NSColor(calibratedWhite: 0.04, alpha: 1).setFill()
+            NSBezierPath(ovalIn: NSRect(x: 211, y: 92, width: 13, height: 13)).fill()
+            NSColor.white.setFill()
+            NSBezierPath(ovalIn: NSRect(x: 215, y: 98, width: 4, height: 4)).fill()
+        }
+
+        if motion == .sniffing {
+            NSColor(calibratedWhite: 0.12, alpha: 0.78).setFill()
+            NSBezierPath(ovalIn: NSRect(x: 304, y: 72, width: 3.2, height: 3.2)).fill()
+            NSBezierPath(ovalIn: NSRect(x: 309, y: 70, width: 2.4, height: 2.4)).fill()
+        }
+    }
+
+    private func drawSniffingScene() {
+        let direction: CGFloat = facingRight ? 1 : -1
+        let tipX: CGFloat = facingRight ? 314 : 34
+        let pulse = (sin(animationPhase * 2.2) + 1) / 2
+        let scentColor = NSColor(calibratedRed: 0.31, green: 0.55, blue: 0.43, alpha: 0.35 + pulse * 0.45)
+        scentColor.setFill()
+        for index in 0..<3 {
+            let distance = CGFloat(8 + index * 9)
+            let size = CGFloat(3 + index)
+            let y = 69 + sin(animationPhase * 2 + CGFloat(index)) * 5
+            NSBezierPath(ovalIn: NSRect(
+                x: tipX + direction * distance - size / 2,
+                y: y,
+                width: size,
+                height: size
+            )).fill()
+        }
+    }
+
+    private func drawPreeningScene() {
+        let drift = sin(animationPhase * 1.5) * 4
+        let feather = NSBezierPath()
+        feather.lineWidth = 1.8
+        feather.move(to: NSPoint(x: 164 + drift, y: 50))
+        feather.curve(
+            to: NSPoint(x: 177 + drift, y: 69),
+            controlPoint1: NSPoint(x: 177 + drift, y: 53),
+            controlPoint2: NSPoint(x: 169 + drift, y: 64)
+        )
+        NSColor(calibratedRed: 0.62, green: 0.48, blue: 0.29, alpha: 0.72).setStroke()
+        feather.stroke()
+    }
+
+    private func drawSleepingScene() {
+        let x: CGFloat = facingRight ? 250 : 82
+        let opacity = 0.45 + (sin(animationPhase) + 1) * 0.20
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: 13, weight: .bold),
+            .foregroundColor: NSColor(calibratedRed: 0.29, green: 0.42, blue: 0.54, alpha: opacity)
+        ]
+        "z".draw(at: NSPoint(x: x, y: 101), withAttributes: attributes)
+        "Z".draw(at: NSPoint(x: x + (facingRight ? 12 : -12), y: 108), withAttributes: attributes)
+    }
+
+    private func drawCallingScene() {
+        let center = NSPoint(x: facingRight ? 317 : 31, y: 82)
+        let startAngle: CGFloat = facingRight ? -55 : 125
+        let endAngle: CGFloat = facingRight ? 55 : 235
+        let pulse = 0.45 + abs(sin(animationPhase * 1.4)) * 0.5
+        let callColor = NSColor(calibratedRed: 0.19, green: 0.47, blue: 0.35, alpha: pulse)
+        callColor.setStroke()
+        for radius in stride(from: 8.0, through: 24.0, by: 8.0) {
+            let arc = NSBezierPath()
+            arc.lineWidth = 2
+            arc.appendArc(
+                withCenter: center,
+                radius: CGFloat(radius),
+                startAngle: startAngle,
+                endAngle: endAngle
+            )
+            arc.stroke()
+        }
     }
 
     private func drawLeg(from start: NSPoint, offset: CGFloat) {
